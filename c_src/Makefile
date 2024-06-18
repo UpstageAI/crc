@@ -59,6 +59,9 @@ endif
 ifeq ($(PLATFORM),msys2)
 	C_SRC_EXECUTABLE_EXTENSION ?= .exe
 	C_SRC_SHARED_EXTENSION ?= .dll
+else ifeq ($(PLATFORM),burrito_windows)
+	C_SRC_EXECUTABLE_EXTENSION ?= .exe
+	C_SRC_SHARED_EXTENSION ?= .dll
 else
 	C_SRC_EXECUTABLE_EXTENSION ?=
 	C_SRC_SHARED_EXTENSION ?= .so
@@ -70,6 +73,9 @@ ifeq ($(PLATFORM),msys2)
 # We hardcode the compiler used on MSYS2. The default CC=cc does
 # not produce working code. The "gcc" MSYS2 package also doesn't.
 	CC = /mingw64/bin/gcc
+	CFLAGS ?= -O3 -std=c11 -finline-functions -fstack-protector -Wall -Wmissing-prototypes
+	CXXFLAGS ?= -O3 -std=c++11 -finline-functions -fstack-protector -Wall
+else ifeq ($(PLATFORM),burrito_windows)
 	CFLAGS ?= -O3 -std=c11 -finline-functions -fstack-protector -Wall -Wmissing-prototypes
 	CXXFLAGS ?= -O3 -std=c++11 -finline-functions -fstack-protector -Wall
 else ifeq ($(PLATFORM),darwin)
